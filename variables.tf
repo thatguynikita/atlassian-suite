@@ -31,15 +31,17 @@ variable "backend_region" {}
 ####
 
 variable "vpc_name" {
-  description = ""
+  description = "Name of the VPC to launch instances in"
 }
 
-variable "private_subnet_name" {
-  description = "Private subnet name to deploy our Atlassian instances in"
+variable "private_app_subnets" {
+  description = "Private subnet name tag to deploy our Atlassian instances. Specify at least 2"
+  type = list
 }
 
-variable "rds_subnet_group_name" {
-  description = "DB subnet group name for RDS instance"
+variable "private_db_subnets" {
+  description = "Private subnet name tag to deploy our DB instance. Specify at least 2"
+  type = list
 }
 
 ####
@@ -47,10 +49,12 @@ variable "rds_subnet_group_name" {
 ####
 
 variable "bitbucket_instance_type" {
-  default = "t2.micro"
+  default = "t2.medium"
 }
 
-variable "bitbucket_volume_size" {}
+variable "bitbucket_volume_size" {
+  default = 10
+}
 
 ####
 #   Jira instance
@@ -60,28 +64,38 @@ variable "jira_instance_type" {
   default = "t2.micro"
 }
 
-variable "jira_volume_size" {}
+variable "jira_volume_size" {
+  default = 10
+}
 
 ####
 #   Confluence instance
 ####
 
 variable "confluence_instance_type" {
-  default = "t2.micro"
+  default = "t2.small"
 }
 
-variable "confluence_volume_size" {}
+variable "confluence_volume_size" {
+  default = 10
+}
 
 ####
 #   RDS instance
 ####
 
-variable "postgres_instance_class" {
+variable "db_instance_class" {
   default = "db.t2.micro"
 }
 
-variable "postgres_allocated_storage" {}
+variable "db_engine" {
+  default = "postgres"
+}
 
-variable "postgres_db_username" {}
+variable "db_allocated_storage" {
+  default = 10
+}
 
-variable "postgres_db_password" {}
+variable "db_username" {}
+
+variable "db_password" {}

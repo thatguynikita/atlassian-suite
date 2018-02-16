@@ -4,6 +4,6 @@ resource "aws_ebs_volume" "application" {
   type              = "gp2"
 
   tags {
-    Name = "${var.tag}"
+    Name = "${var.name_tag}_home"
   }
 }

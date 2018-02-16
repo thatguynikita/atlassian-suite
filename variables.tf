@@ -8,40 +8,36 @@ variable "aws_region" {
 }
 
 variable "profile" {
-  description = "AWS profile to use for deployment"
+  description = "AWS profile used for deployment"
 }
 
 variable "key_name" {
-  description = "Name of the publice key to install"
-}
-
-variable "iam_instance_profile_name" {
-  description = "IAM profile name with read access to EC2 instances. Required to call Ansible gather facts"
+  description = "Name of the public key to install on EC2 instances"
 }
 
 # S3 backend path to store tfstate file
-variable "backend_bucket" {}
-
-variable "backend_path" {}
-
-variable "backend_region" {}
+#variable "backend_bucket" {}
+#
+#variable "backend_path" {}
+#
+#variable "backend_region" {}
 
 ####
 #   Network related
 ####
 
-variable "vpc_name" {
-  description = "Name of the VPC to launch instances in"
+variable "vpc_id" {
+  description = "VPC ID to launch instances in"
 }
 
 variable "private_app_subnets" {
-  description = "Private subnet name tag to deploy our Atlassian instances. Specify at least 2"
-  type = list
+  description = "Private subnet ID(s) for application deployments"
+  type = "list"
 }
 
 variable "private_db_subnets" {
-  description = "Private subnet name tag to deploy our DB instance. Specify at least 2"
-  type = list
+  description = "Private subnet IDs for DB instance. At least 2 is required to make DB subnet group"
+  type = "list"
 }
 
 ####

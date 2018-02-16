@@ -1,10 +1,11 @@
 # GEt rid of inline blocks
 resource "aws_security_group" "application" {
-  name        = "${var.tag}"
-  description = "Allow SSH to the host"
+  name        = "${var.name_tag}_sg"
+  description = "Allow SSH and application access from VPC"
+  vpc_id = "${data.aws_vpc.site_vpc.id}"
 
   tags {
-    Name = "${var.tag}"
+    Name = "${var.name_tag}"
   }
 
   ingress {
@@ -29,5 +30,5 @@ resource "aws_security_group_rule" "application" {
   protocol          = "tcp"
   to_port           = "${var.open_port_range[1]}"
   cidr_blocks       = ["${data.aws_vpc.site_vpc.cidr_block}"]
-  description       = "Only listening ports for SSH and Tomcat allowed"
+  description       = "Allow application Tomcat ports"
 }

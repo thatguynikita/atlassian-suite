@@ -1,17 +1,18 @@
 # Get rid of inline blocks
 resource "aws_security_group" "db" {
-  name        = "${var.tag}"
-  description = "SG for accessing ${var.tag} DB from instances that use it"
+  name        = "${var.name_tag}_sg"
+  description = "Allow access to ${var.name_tag} DB from application servers"
+  vpc_id = "${var.vpc_id}"
 
   tags {
-    Name = "${var.tag}"
+    Name = "${var.name_tag}"
   }
 
   ingress {
     from_port       = "${var.open_port_range[0]}"
     protocol        = "tcp"
     to_port         = "${var.open_port_range[1]}"
-    security_groups = "${var.allowed_sgs}"
+    security_groups = ["${var.allowed_sgs}"]
   }
 
   egress {

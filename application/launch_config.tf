@@ -16,13 +16,13 @@ data "aws_ami" "amazonlinux2" {
 
 resource "aws_launch_configuration" "application" {
   image_id                    = "${data.aws_ami.amazonlinux2.id}"
-  instance_type               = "${var.app_instance_type}"
+  instance_type               = "${var.instance_type}"
   associate_public_ip_address = false
-  name                        = "${var.tag}"
+  name                        = "${var.name_tag}_conf"
   iam_instance_profile        = "${var.iam_instance_profile_name}"
   key_name                    = "${var.key_name}"
-  security_groups             = ["${aws_security_group.application}"]
-  user_data                   = "${file("user-data.sh")}"
+  security_groups             = ["${aws_security_group.application.id}"]
+  user_data                   = "${file("${path.module}/user-data")}"
 
   lifecycle {
     create_before_destroy = true

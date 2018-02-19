@@ -18,11 +18,11 @@ resource "aws_launch_configuration" "application" {
   image_id                    = "${data.aws_ami.amazonlinux2.id}"
   instance_type               = "${var.instance_type}"
   associate_public_ip_address = false
-  name                        = "${var.name_tag}_conf"
+  name_prefix                 = "${var.name_tag}_"
   iam_instance_profile        = "${var.iam_instance_profile_name}"
   key_name                    = "${var.key_name}"
   security_groups             = ["${aws_security_group.application.id}"]
-  user_data                   = "${file("${path.module}/user-data")}"
+  user_data                   = "${data.template_cloudinit_config.userdata.rendered}"
 
   lifecycle {
     create_before_destroy = true

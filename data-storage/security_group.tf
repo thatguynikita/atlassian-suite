@@ -9,9 +9,9 @@ resource "aws_security_group" "db" {
   }
 
   ingress {
-    from_port       = "${var.open_port_range[0]}"
+    from_port       = "${var.listening_port}"
     protocol        = "tcp"
-    to_port         = "${var.open_port_range[1]}"
+    to_port         = "${var.listening_port}"
     security_groups = ["${var.allowed_sgs}"]
   }
 

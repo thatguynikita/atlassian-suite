@@ -1,0 +1,15 @@
+[Unit]
+Description=Atlassian Bitbucket Server Service
+After=network.target syslog.target
+
+[Service]
+Type=forking
+User=atlbitbucket
+LimitNOFILE=100000
+LimitMEMLOCK=100000
+PIDFile={{ home_dir }}/log/{{ app_name }}.pid
+ExecStart={{ app_dir }}/bin/start-bitbucket.sh
+ExecStop={{ app_dir }}/bin/stop-bitbucket.sh
+
+[Install]
+WantedBy=multi-user.target

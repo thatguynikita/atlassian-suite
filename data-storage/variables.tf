@@ -5,9 +5,8 @@ variable "vpc_id" {}
 variable "private_subnets" {
   type = "list"
 }
-variable "open_port_range" {
-  description = "Open port range for security group"
-  type = "list"
+variable "listening_port" {
+  description = "DB listening port"
 }
 variable "allowed_sgs" {
   description = "Used to allow other security groups to connect"

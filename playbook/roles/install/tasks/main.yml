@@ -1,0 +1,19 @@
+---
+- name: Download installer
+  get_url:
+    url: "{{ installer_url }}"
+    dest: /tmp/{{ installer_url | basename }}
+    mode: 0550
+  register: installer
+- name: Generate response file for unattended install
+  template:
+    src: "{{ app_name }}_response.varfile.j2"
+    dest: /tmp/response.varfile
+    mode: 0644
+- name: Install the package
+  command: "{{ installer.dest }} -q -varfile /tmp/response.varfile"
+- name: Generate server.xml for Tomcat
+  template:
+    src: "{{ app_name }}_server.xml.j2"
+    dest: "{{ app_dir }}/conf/server.xml"
+    mode: 0644

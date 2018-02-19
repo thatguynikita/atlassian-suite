@@ -13,70 +13,12 @@ provider "aws" {
 #}
 ## Test destroy too
 
-# Read only role for EC2 instances
-resource "aws_iam_role_policy" "ec2_readonly" {
-  name = "atlassian-ec2-readonly"
-  role = "${aws_iam_role.ec2_assume_role.id}"
-
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "ec2:Describe*",
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "cloudwatch:ListMetrics",
-                "cloudwatch:GetMetricStatistics",
-                "cloudwatch:Describe*"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "autoscaling:Describe*",
-            "Resource": "*"
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_role" "ec2_assume_role" {
-  name = "atlassian-ec2-readonly"
-  description = "Read only role for EC2 instances to run Ansible ec2-gather-facts"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "atlassian-ec2-readonly"
-  role = "${aws_iam_role.ec2_assume_role.name}"
-}
-
 module "postgres" {
   source          = "./data-storage"
   name_tag        = "atlassian-postgres"
   vpc_id          = "${var.vpc_id}"
   private_subnets = "${var.private_db_subnets}"
-  open_port_range = ["5432", "5432"]
+  listening_port  = "5432"
 
   allowed_sgs = [
     "${module.bitbucket_instance.security_group_id}",
@@ -96,12 +38,15 @@ module "bitbucket_instance" {
   name_tag                  = "atlassian-bitbucket"
   vpc_id                    = "${var.vpc_id}"
   private_subnet            = "${var.private_app_subnets[0]}"
-  open_port_range           = ["7990", "7990"]
+  listening_port            = "7990"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.bitbucket_instance_type}"
   home_volume_size          = "${var.bitbucket_volume_size}"
   db_endpoint               = "${module.postgres.endpoint}"
+  db_credentials            = ["${var.db_username}", "${var.db_password}"]
+  ansible_playbook          = "playbook/bitbucket.yml"
+  website_url               = "${var.bitbucket_url}"
 }
 
 module "jira_instance" {
@@ -109,12 +54,15 @@ module "jira_instance" {
   name_tag                  = "atlassian-jira"
   vpc_id                    = "${var.vpc_id}"
   private_subnet            = "${var.private_app_subnets[1]}"
-  open_port_range           = ["8080", "8080"]
+  listening_port            = "8080"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.jira_instance_type}"
   home_volume_size          = "${var.jira_volume_size}"
   db_endpoint               = "${module.postgres.endpoint}"
+  db_credentials            = ["${var.db_username}", "${var.db_password}"]
+  ansible_playbook          = "playbook/jira.yml"
+  website_url               = "${var.jira_url}"
 }
 
 module "confluence_instance" {
@@ -122,10 +70,13 @@ module "confluence_instance" {
   name_tag                  = "atlassian-confluence"
   vpc_id                    = "${var.vpc_id}"
   private_subnet            = "${var.private_app_subnets[1]}"
-  open_port_range           = ["8090", "8091"]
+  listening_port            = "8090"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.confluence_instance_type}"
   home_volume_size          = "${var.confluence_volume_size}"
   db_endpoint               = "${module.postgres.endpoint}"
+  db_credentials            = ["${var.db_username}", "${var.db_password}"]
+  ansible_playbook          = "playbook/confluence.yml"
+  website_url               = "${var.confluence_url}"
 }

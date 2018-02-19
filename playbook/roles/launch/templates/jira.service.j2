@@ -1,0 +1,13 @@
+[Unit]
+Description=Jira Issue & Project Tracking Software
+After=network.target
+
+[Service]
+Type=forking
+User=jira
+PIDFile={{ app_dir }}/work/catalina.pid
+ExecStart={{ app_dir }}/bin/start-jira.sh
+ExecStop={{ app_dir }}/bin/stop-jira.sh
+
+[Install]
+WantedBy=multi-user.target

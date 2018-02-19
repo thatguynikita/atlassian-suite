@@ -3,9 +3,8 @@ variable "name_tag" {
 }
 variable "vpc_id" {}
 variable "private_subnet" {}
-variable "open_port_range" {
-  description = "Open port range for security group"
-  type = "list"
+variable "listening_port" {
+  description = "Open port for application. Applied to security group and optionally passed as variable to playbook"
 }
 variable "iam_instance_profile_name" {}
 variable "key_name" {}
@@ -13,9 +12,12 @@ variable "instance_type" {}
 variable "home_volume_size" {
   description = "Size for re-attachable home volume"
 }
-variable "db_endpoint" {
-  description = "DB endpoint for applications"
+variable "db_endpoint" {}
+variable "db_credentials" {
+  type = "list"
 }
+variable "ansible_playbook" {}
+variable "website_url" {}
 
 data "aws_vpc" "site_vpc" {
   id = "${var.vpc_id}"

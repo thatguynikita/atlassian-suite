@@ -1,0 +1,15 @@
+--- #
+- hosts: localhost
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  environment:
+    AWS_REGION: "{{ ansible_ec2_placement_region }}"
+  vars:
+    db_name: confluence
+    app_name: confluence
+    installer_url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.7.1-x64.bin
+  roles:
+    - common
+    - install
+    - launch

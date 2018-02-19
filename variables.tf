@@ -52,6 +52,8 @@ variable "bitbucket_volume_size" {
   default = 10
 }
 
+variable "bitbucket_url" {}
+
 ####
 #   Jira instance
 ####
@@ -64,6 +66,8 @@ variable "jira_volume_size" {
   default = 10
 }
 
+variable "jira_url" {}
+
 ####
 #   Confluence instance
 ####
@@ -75,6 +79,8 @@ variable "confluence_instance_type" {
 variable "confluence_volume_size" {
   default = 10
 }
+
+variable "confluence_url" {}
 
 ####
 #   RDS instance

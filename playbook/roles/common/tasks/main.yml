@@ -1,0 +1,51 @@
+---
+- name: Make sure DB server has named database
+  postgresql_db:
+    name: "{{ db_name }}"
+    encoding: UTF-8
+    state: present
+    login_host: "{{ db_host }}"
+    port: "{{ db_port }}"
+    login_user: "{{ db_user }}"
+    login_password: "{{ db_password }}"
+- name: Gather EC2 facts
+  ec2_metadata_facts:
+- name: Gather EC2 ENI facts
+  ec2_eni_facts:
+    filters:
+      network-interface-id: "{{ eni_id }}"
+  register: ec2_eni_facts
+- name: Detach ENI
+  ec2_eni:
+    eni_id: "{{ eni_id }}"
+    instance_id: None
+    subnet_id: "{{ ec2_eni_facts.interfaces.0.subnet_id }}"
+    attached: False
+    force_detach: True
+- name: Attach ENI
+  ec2_eni:
+    eni_id: "{{ eni_id }}"
+    instance_id: "{{ ansible_ec2_instance_id }}"
+    subnet_id: "{{ ec2_eni_facts.interfaces.0.subnet_id }}"
+    private_ip_address: "{{ ec2_eni_facts.interfaces.0.private_ip_address }}"
+    attached: True
+    device_index: 1
+- name: Detach EBS volume
+  ec2_vol:
+    id: "{{ ebs_id }}"
+    instance: None
+- name: Attach EBS volume
+  ec2_vol:
+    id: "{{ ebs_id }}"
+    instance: "{{ ansible_ec2_instance_id }}"
+  register: volume
+- name: Make sure it has fs on it
+  filesystem:
+    dev: "{{ volume.device }}"
+    fstype: xfs
+- name: Mount the volume
+  mount:
+    path: "{{ mount_point }}"
+    src: "{{ volume.device }}"
+    fstype: xfs
+    state: mounted

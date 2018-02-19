@@ -1,0 +1,13 @@
+[Unit]
+Description=Confluence Team Collaboration Software
+After=network.target
+
+[Service]
+Type=forking
+User=confluence
+PIDFile={{ app_dir }}/work/catalina.pid
+ExecStart={{ app_dir }}/bin/start-confluence.sh
+ExecStop={{ app_dir }}/bin/stop-confluence.sh
+
+[Install]
+WantedBy=multi-user.target

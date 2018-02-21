@@ -64,9 +64,14 @@
                    acceptCount="100"
                    disableUploadTimeout="true"
                    bindOnInit="false"
-                   proxyName="{{ website_url }}"
-                   proxyPort="80"/>
-
+                   proxyName="{{ proxy_url | urlsplit('hostname') }}"
+                   scheme="{{ proxy_url | urlsplit('scheme') }}"
+                   {% if proxy_url | urlsplit('scheme') == 'https' %}
+secure="true"
+                   proxyPort="443"/>
+                   {% else %}
+proxyPort="80"/>
+                   {% endif %}
         <!--
         ====================================================================================
 
@@ -117,7 +122,7 @@
         <Engine name="Catalina" defaultHost="localhost">
             <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
 
-                <Context path="/jira" docBase="${catalina.home}/atlassian-jira" reloadable="false" useHttpOnly="true">
+                <Context path="{{ proxy_url | urlsplit('path') }}" docBase="${catalina.home}/atlassian-jira" reloadable="false" useHttpOnly="true">
 
 
                     <!--

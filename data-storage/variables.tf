@@ -9,15 +9,12 @@ variable "listening_port" {
   description = "DB listening port"
 }
 variable "allowed_sgs" {
-  description = "Used to allow other security groups to connect"
+  description = "Used to allow other security groups to connect this DB"
   type = "list"
 }
 variable "instance_class" {}
 variable "engine" {}
 variable "allocated_storage" {}
-variable "username" {}
-variable "password" {}
-
-output "endpoint" {
-  value = "${aws_db_instance.db.endpoint}"
+variable "db_credentials" {
+  type = "list"
 }

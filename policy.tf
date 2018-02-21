@@ -1,4 +1,3 @@
-# Read only role for EC2 instances
 resource "aws_iam_role_policy" "ec2_access" {
   name   = "atlassian-ec2-readonly"
   role   = "${aws_iam_role.ec2_assume_role.id}"

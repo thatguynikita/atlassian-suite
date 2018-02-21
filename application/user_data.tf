@@ -13,7 +13,7 @@ data "template_file" "cloud-config" {
     db_endpoint    = "${var.db_endpoint}"
     db_username    = "${var.db_credentials[0]}"
     db_password    = "${var.db_credentials[1]}"
-    website_url    = "${var.website_url}"
+    proxied_url    = "${var.proxied_url}"
     listening_port = "${var.listening_port}"
     ebs_id         = "${aws_ebs_volume.application.id}"
     eni_id         = "${aws_network_interface.application.id}"

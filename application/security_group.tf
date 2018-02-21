@@ -1,4 +1,3 @@
-# GEt rid of inline blocks
 resource "aws_security_group" "application" {
   name        = "${var.name_tag}_sg"
   description = "Allow SSH and application access from VPC"

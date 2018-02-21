@@ -4,8 +4,8 @@ resource "aws_db_instance" "db" {
   engine                 = "${var.engine}"
   storage_type           = "gp2"
   identifier             = "${var.name_tag}"
-  username               = "${var.username}"
-  password               = "${var.password}"
+  username               = "${var.db_credentials[0]}"
+  password               = "${var.db_credentials[1]}"
   vpc_security_group_ids = ["${aws_security_group.db.id}"]
   db_subnet_group_name   = "${aws_db_subnet_group.db.name}"
   skip_final_snapshot    = true

@@ -1,5 +1,5 @@
----
-- name: Make sure DB server has named database
+--- #
+- name: Make sure database exists on the DB server
   postgresql_db:
     name: "{{ db_name }}"
     encoding: UTF-8
@@ -15,31 +15,31 @@
     filters:
       network-interface-id: "{{ eni_id }}"
   register: ec2_eni_facts
-- name: Detach ENI
+- name: Detach ENI in case it was previously attached
   ec2_eni:
     eni_id: "{{ eni_id }}"
     instance_id: None
-    subnet_id: "{{ ec2_eni_facts.interfaces.0.subnet_id }}"
     attached: False
     force_detach: True
-- name: Attach ENI
+- name: Attach ENI to the current instance
   ec2_eni:
     eni_id: "{{ eni_id }}"
     instance_id: "{{ ansible_ec2_instance_id }}"
-    subnet_id: "{{ ec2_eni_facts.interfaces.0.subnet_id }}"
-    private_ip_address: "{{ ec2_eni_facts.interfaces.0.private_ip_address }}"
     attached: True
     device_index: 1
-- name: Detach EBS volume
+- name: Restart ENI interface
+  # This step is a must for instances running systemd
+  command: systemctl restart ec2net-ifup@eth1.service
+- name: Detach EBS volume from previous instance
   ec2_vol:
     id: "{{ ebs_id }}"
     instance: None
-- name: Attach EBS volume
+- name: Attach EBS volume to the current instance
   ec2_vol:
     id: "{{ ebs_id }}"
     instance: "{{ ansible_ec2_instance_id }}"
   register: volume
-- name: Make sure it has fs on it
+- name: Make sure volume has file system
   filesystem:
     dev: "{{ volume.device }}"
     fstype: xfs

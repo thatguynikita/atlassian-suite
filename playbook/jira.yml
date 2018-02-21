@@ -10,6 +10,6 @@
     app_name: jira
     installer_url: https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.7.1-x64.bin
   roles:
-    - common
+    - setup
     - install
     - launch

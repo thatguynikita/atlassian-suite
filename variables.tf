@@ -23,7 +23,7 @@ variable "key_name" {
 #variable "backend_region" {}
 
 ####
-#   Network related
+#   Site related
 ####
 
 variable "vpc_id" {
@@ -59,7 +59,7 @@ variable "bitbucket_url" {}
 ####
 
 variable "jira_instance_type" {
-  default = "t2.micro"
+  default = "t2.small"
 }
 
 variable "jira_volume_size" {
@@ -73,7 +73,7 @@ variable "jira_url" {}
 ####
 
 variable "confluence_instance_type" {
-  default = "t2.small"
+  default = "t2.medium"
 }
 
 variable "confluence_volume_size" {

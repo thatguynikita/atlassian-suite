@@ -1,4 +1,3 @@
-# Get rid of inline blocks
 resource "aws_security_group" "db" {
   name        = "${var.name_tag}_sg"
   description = "Allow access to ${var.name_tag} DB from application servers"

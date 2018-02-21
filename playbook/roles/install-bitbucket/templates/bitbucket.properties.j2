@@ -1,5 +1,12 @@
 server.port={{ listening_port }}
-server.scheme=http
+server.scheme={{ proxy_url | urlsplit('scheme') }}
+{% if proxy_url | urlsplit('scheme') == 'https' %}
+server.secure=true
+server.proxy-port=443
+{% else %}
 server.proxy-port=80
-server.proxy-name={{ website_url }}
-server.context-path=/bitbucket
+{% endif %}
+server.proxy-name={{ proxy_url | urlsplit('hostname') }}
+{% if proxy_url | urlsplit('path') != '' %}
+server.context-path={{ proxy_url | urlsplit('path') }}
+{% endif %}

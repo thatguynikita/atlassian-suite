@@ -7,7 +7,7 @@ write_files:
         DB_ENDPOINT=${db_endpoint}
         DB_USERNAME=${db_username}
         DB_PASSWORD=${db_password}
-        WEBSITE_URL=${website_url}
+        PROXIED_URL=${proxied_url}
         LISTENING_PORT=${listening_port}
         ENI_ID=${eni_id}
         EBS_ID=${ebs_id}

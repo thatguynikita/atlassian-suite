@@ -4,8 +4,8 @@ db_user: "{{ ansible_env.DB_USERNAME }}"
 db_password: "{{ ansible_env.DB_PASSWORD }}"
 eni_id: "{{ ansible_env.ENI_ID }}"
 ebs_id: "{{ ansible_env.EBS_ID }}"
+proxy_url: "{{ ansible_env.PROXIED_URL }}"
 listening_port: "{{ ansible_env.LISTENING_PORT }}"
-website_url: "{{ ansible_env.WEBSITE_URL }}"
-mount_point: /mnt/atlassian
+mount_point: /var/atlassian/application-data
 app_dir: /opt/atlassian/{{ app_name }}
 home_dir: "{{ mount_point }}/{{ app_name }}"

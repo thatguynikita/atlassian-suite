@@ -11,7 +11,6 @@ provider "aws" {
 #    encrypt = true
 #  }
 #}
-## Test destroy too
 
 module "postgres" {
   source          = "./data-storage"
@@ -29,8 +28,7 @@ module "postgres" {
   instance_class    = "${var.db_instance_class}"
   engine            = "${var.db_engine}"
   allocated_storage = "${var.db_allocated_storage}"
-  username          = "${var.db_username}"
-  password          = "${var.db_password}"
+  db_credentials    = ["${var.db_username}", "${var.db_password}"]
 }
 
 module "bitbucket_instance" {
@@ -38,7 +36,6 @@ module "bitbucket_instance" {
   name_tag                  = "atlassian-bitbucket"
   vpc_id                    = "${var.vpc_id}"
   private_subnet            = "${var.private_app_subnets[0]}"
-  listening_port            = "7990"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.bitbucket_instance_type}"
@@ -46,7 +43,8 @@ module "bitbucket_instance" {
   db_endpoint               = "${module.postgres.endpoint}"
   db_credentials            = ["${var.db_username}", "${var.db_password}"]
   ansible_playbook          = "playbook/bitbucket.yml"
-  website_url               = "${var.bitbucket_url}"
+  proxied_url               = "${var.bitbucket_url}"
+  listening_port            = "7990"
 }
 
 module "jira_instance" {
@@ -54,7 +52,6 @@ module "jira_instance" {
   name_tag                  = "atlassian-jira"
   vpc_id                    = "${var.vpc_id}"
   private_subnet            = "${var.private_app_subnets[1]}"
-  listening_port            = "8080"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.jira_instance_type}"
@@ -62,7 +59,8 @@ module "jira_instance" {
   db_endpoint               = "${module.postgres.endpoint}"
   db_credentials            = ["${var.db_username}", "${var.db_password}"]
   ansible_playbook          = "playbook/jira.yml"
-  website_url               = "${var.jira_url}"
+  proxied_url               = "${var.jira_url}"
+  listening_port            = "8080"
 }
 
 module "confluence_instance" {
@@ -70,7 +68,6 @@ module "confluence_instance" {
   name_tag                  = "atlassian-confluence"
   vpc_id                    = "${var.vpc_id}"
   private_subnet            = "${var.private_app_subnets[1]}"
-  listening_port            = "8090"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.confluence_instance_type}"
@@ -78,5 +75,6 @@ module "confluence_instance" {
   db_endpoint               = "${module.postgres.endpoint}"
   db_credentials            = ["${var.db_username}", "${var.db_password}"]
   ansible_playbook          = "playbook/confluence.yml"
-  website_url               = "${var.confluence_url}"
+  proxied_url               = "${var.confluence_url}"
+  listening_port            = "8090"
 }

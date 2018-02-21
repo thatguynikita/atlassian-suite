@@ -7,7 +7,7 @@ Each application instance runs in isolated Auto-Scaling group for scheduling and
 
 
 
-#### Prerequisites:
+#### Requirements:
 - Non-default VPC with at least 2 private subnets
 - SSH key(s) uploaded to AWS
 - Reverse proxy server configured in a public subnet

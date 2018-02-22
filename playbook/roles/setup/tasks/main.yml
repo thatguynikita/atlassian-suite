@@ -10,11 +10,6 @@
     login_password: "{{ db_password }}"
 - name: Gather EC2 facts
   ec2_metadata_facts:
-- name: Gather EC2 ENI facts
-  ec2_eni_facts:
-    filters:
-      network-interface-id: "{{ eni_id }}"
-  register: ec2_eni_facts
 - name: Detach ENI in case it was previously attached
   ec2_eni:
     eni_id: "{{ eni_id }}"
@@ -28,8 +23,9 @@
     attached: True
     device_index: 1
 - name: Restart ENI interface
-  # This step is a must for instances running systemd
-  command: systemctl restart ec2net-ifup@eth1.service
+  service:
+    name: ec2net-ifup@eth1
+    state: restarted
 - name: Detach EBS volume from previous instance
   ec2_vol:
     id: "{{ ebs_id }}"

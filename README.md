@@ -12,3 +12,8 @@ Each application instance runs in isolated Auto-Scaling group for scheduling and
 - SSH key(s) uploaded to AWS
 - Reverse proxy server configured in a public subnet
 - Set of registered domain names for each of the applications
+
+README-TODO:
+- Add information about OS and default settings for EC2
+- The same for RDS
+- Add information about covered apps

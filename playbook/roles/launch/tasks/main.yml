@@ -8,4 +8,4 @@
   service:
     name: "{{ app_name }}"
     state: started
-    enabled: True
+    enabled: yes

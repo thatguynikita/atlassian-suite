@@ -15,9 +15,9 @@ resource "aws_security_group" "application" {
   }
 
   ingress {
-    from_port   = "${var.listening_port}"
+    from_port   = 7990
     protocol    = "tcp"
-    to_port     = "${var.listening_port}"
+    to_port     = 8090
     cidr_blocks = ["${data.aws_vpc.site_vpc.cidr_block}"]
   }
 

@@ -3,15 +3,6 @@ provider "aws" {
   profile = "${var.profile}"
 }
 
-#terraform {
-#  backend "s3" {
-#    bucket  = "${var.backend_bucket}"
-#    key     = "${var.backend_path}"
-#    region  = "${var.backend_region}"
-#    encrypt = true
-#  }
-#}
-
 module "postgres" {
   source          = "./data-storage"
   name_tag        = "atlassian-postgres"
@@ -51,7 +42,7 @@ module "jira_instance" {
   source                    = "./application"
   name_tag                  = "atlassian-jira"
   vpc_id                    = "${var.vpc_id}"
-  private_subnet            = "${var.private_app_subnets[1]}"
+  private_subnet            = "${var.private_app_subnets[0]}"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.jira_instance_type}"
@@ -67,7 +58,7 @@ module "confluence_instance" {
   source                    = "./application"
   name_tag                  = "atlassian-confluence"
   vpc_id                    = "${var.vpc_id}"
-  private_subnet            = "${var.private_app_subnets[1]}"
+  private_subnet            = "${var.private_app_subnets[0]}"
   iam_instance_profile_name = "${aws_iam_instance_profile.ec2_instance_profile.name}"
   key_name                  = "${var.key_name}"
   instance_type             = "${var.confluence_instance_type}"

@@ -15,13 +15,6 @@ variable "key_name" {
   description = "Name of the public key to install on EC2 instances"
 }
 
-# S3 backend path to store tfstate file
-#variable "backend_bucket" {}
-#
-#variable "backend_path" {}
-#
-#variable "backend_region" {}
-
 ####
 #   Site related
 ####

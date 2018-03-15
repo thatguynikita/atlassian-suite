@@ -4,3 +4,6 @@ output "security_group_id" {
 output "static_ip" {
   value = "${aws_network_interface.application.private_ip}"
 }
+output "listening_port" {
+  value = "${var.listening_port}"
+}

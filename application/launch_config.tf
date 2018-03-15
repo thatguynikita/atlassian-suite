@@ -23,6 +23,7 @@ resource "aws_launch_configuration" "application" {
   key_name                    = "${var.key_name}"
   security_groups             = ["${aws_security_group.application.id}"]
   user_data                   = "${data.template_cloudinit_config.userdata.rendered}"
+  enable_monitoring           = false
 
   lifecycle {
     create_before_destroy = true

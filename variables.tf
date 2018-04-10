@@ -9,6 +9,7 @@ variable "aws_region" {
 
 variable "profile" {
   description = "AWS profile used for deployment"
+  default     = "default"
 }
 
 variable "key_name" {

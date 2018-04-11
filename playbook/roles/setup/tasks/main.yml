@@ -1,13 +1,4 @@
 --- #
-- name: Make sure database exists on the DB server
-  postgresql_db:
-    name: "{{ db_name }}"
-    encoding: UTF-8
-    state: present
-    login_host: "{{ db_host }}"
-    port: "{{ db_port }}"
-    login_user: "{{ db_user }}"
-    login_password: "{{ db_password }}"
 - name: Gather EC2 facts
   ec2_metadata_facts:
 - name: Detach ENI in case it was previously attached
@@ -45,3 +36,18 @@
     src: "{{ volume.device }}"
     fstype: xfs
     state: mounted
+- name: Wait for database to come up
+  wait_for:
+    host: "{{ db_host }}"
+    port: "{{ db_port }}"
+    delay: 60
+    timeout: 600
+- name: Make sure database exists on the DB server
+  postgresql_db:
+    name: "{{ db_name }}"
+    encoding: UTF-8
+    state: present
+    login_host: "{{ db_host }}"
+    port: "{{ db_port }}"
+    login_user: "{{ db_user }}"
+    login_password: "{{ db_password }}"

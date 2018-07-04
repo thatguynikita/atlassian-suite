@@ -44,13 +44,13 @@ Each application instance runs in isolated Auto-Scaling group for scheduling and
 | private_db_subnets | Private subnet IDs for DB instance. At least 2 is required to make DB subnet group | list |  | yes |
 | bitbucket_instance_type | EC2 instance type | string | t2.medium | yes |
 | bitbucket_volume_size | Attached EBS volume size | number | 10 | yes |
-| bitbucket_url | Internet facing URL | string |  |  |
+| bitbucket_url | URL that will be passed down to conifgure Tomcat | string |  | yes |
 | jira_instance_type | EC2 instance type | string | t2.small | yes |
 | jira_volume_size | Attached EBS volume size | number | 10 | yes |
-| jira_url | Internet facing URL | string |  |  |
+| jira_url | URL that will be passed down to conifgure Tomcat | string |  | yes |
 | confluence_instance_type | EC2 instance type | string | t2.medium | yes |
 | confluence_volume_size | Attached EBS volume size | number | 10 | yes |
-| confluence_url | Internet facing URL | string |  |  |
+| confluence_url | URL that will be passed down to conifgure Tomcat | string |  | yes |
 | db_instance_class | RDS instance type | string | db.t2.micro | yes |
 | db_engine | DB engine to use | string | postgres | yes |
 | db_allocated_storage | Amount of storage to allocate | number | 10 | yes |

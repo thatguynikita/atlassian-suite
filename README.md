@@ -1,10 +1,7 @@
-# Terraform managed Atlassian suite on AWS
+# Terraform managed Atlassian stack in AWS
 
-<p align="center">
-<img alt="Atlassian logo" width="400" height="80" src="https://logos-download.com/wp-content/uploads/2016/09/Atlassian_logo.png">
-</p>
-
-- [Terraform managed Atlassian suite on AWS](#Terraform-managed-Atlassian-suite-on-AWS)
+Contents
+--------
   - [Notes](#Notes)
   - [Features](#Features)
   - [Requirements](#Requirements)
@@ -45,26 +42,26 @@ Each application instance runs in isolated Auto-Scaling group for scheduling and
 | vpc_id | VPC ID to launch instances in | string |  | yes |
 | private_app_subnets | Private subnet ID(s) for application deployments | list |  | yes |
 | private_db_subnets | Private subnet IDs for DB instance. At least 2 is required to make DB subnet group | list |  | yes |
-| bitbucket_instance_type |  | string | t2.medium | yes |
-| bitbucket_volume_size |  | number | 10 | yes |
-| bitbucket_url |  | string |  |  |
-| jira_instance_type |  | string | t2.small | yes |
-| jira_volume_size |  | number | 10 | yes |
-| jira_url |  | string |  |  |
-| confluence_instance_type |  | string | t2.medium | yes |
-| confluence_volume_size |  | number | 10 | yes |
-| confluence_url |  | string |  |  |
-| db_instance_class |  | string | db.t2.micro | yes |
-| db_engine |  | string | postgres | yes |
-| db_allocated_storage |  | number | 10 | yes |
-| db_username |  | string |  | yes |
-| db_password |  | string |  | yes |
+| bitbucket_instance_type | EC2 instance type | string | t2.medium | yes |
+| bitbucket_volume_size | Attached EBS volume size | number | 10 | yes |
+| bitbucket_url | Internet facing URL | string |  |  |
+| jira_instance_type | EC2 instance type | string | t2.small | yes |
+| jira_volume_size | Attached EBS volume size | number | 10 | yes |
+| jira_url | Internet facing URL | string |  |  |
+| confluence_instance_type | EC2 instance type | string | t2.medium | yes |
+| confluence_volume_size | Attached EBS volume size | number | 10 | yes |
+| confluence_url | Internet facing URL | string |  |  |
+| db_instance_class | RDS instance type | string | db.t2.micro | yes |
+| db_engine | DB engine to use | string | postgres | yes |
+| db_allocated_storage | Amount of storage to allocate | number | 10 | yes |
+| db_username | DB username | string |  | yes |
+| db_password | DB password | string |  | yes |
 
 ## Terraform Outputs
 
 | Name | Description |
 |------|-------------|
-| _DB endpoint |  |
-| Bitbucket static endpoint |  |
-| Jira static endpoint |  |
-| Confluence static endpoint |  |
+| db_endpoint | Database endpoint |
+| bitbucket_endpoint | Bitbucket static endpoint |
+| jira_endpoint | Jira static endpoint |
+| confluence_endpoint | Confluence static endpoint |

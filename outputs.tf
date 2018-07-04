@@ -1,12 +1,12 @@
-output "_DB endpoint" {
+output "db_endpoint" {
   value = "${module.postgres.endpoint}"
 }
-output "Bitbucket static endpoint" {
+output "bitbucket_endpoint" {
   value = "${module.bitbucket_instance.static_ip}:${module.bitbucket_instance.listening_port}"
 }
-output "Jira static endpoint" {
+output "jira_endpoint" {
   value = "${module.jira_instance.static_ip}:${module.jira_instance.listening_port}"
 }
-output "Confluence static endpoint" {
+output "confluence_endpoint" {
   value = "${module.confluence_instance.static_ip}:${module.confluence_instance.listening_port}"
 }

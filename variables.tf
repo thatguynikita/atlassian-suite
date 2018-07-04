@@ -39,59 +39,78 @@ variable "private_db_subnets" {
 ####
 
 variable "bitbucket_instance_type" {
+  description = "EC2 instance type"
   default = "t2.medium"
 }
 
 variable "bitbucket_volume_size" {
+  description = "Attached EBS volume size"
   default = 10
 }
 
-variable "bitbucket_url" {}
+variable "bitbucket_url" {
+  description = "Internet facing URL"
+}
 
 ####
 #   Jira instance
 ####
 
 variable "jira_instance_type" {
+  description = "EC2 instance type"
   default = "t2.small"
 }
 
 variable "jira_volume_size" {
+  description = "Attached EBS volume size"
   default = 10
 }
 
-variable "jira_url" {}
+variable "jira_url" {
+  description = "Internet facing URL"
+}
 
 ####
 #   Confluence instance
 ####
 
 variable "confluence_instance_type" {
+  description = "EC2 instance type"
   default = "t2.medium"
 }
 
 variable "confluence_volume_size" {
+  description = "Attached EBS volume size"
   default = 10
 }
 
-variable "confluence_url" {}
+variable "confluence_url" {
+  description = "Internet facing URL"
+}
 
 ####
 #   RDS instance
 ####
 
 variable "db_instance_class" {
+  description = "RDS instance type"
   default = "db.t2.micro"
 }
 
 variable "db_engine" {
+  description = "DB engine to use"
   default = "postgres"
 }
 
 variable "db_allocated_storage" {
+  description = "Amount of storage to allocate"
   default = 10
 }
 
-variable "db_username" {}
+variable "db_username" {
+  description = "DB username"
+}
 
-variable "db_password" {}
+variable "db_password" {
+  description = "DB password"
+}
